@@ -170,7 +170,7 @@ function draw() {
   ctx.fillText("Mutation: " + mutation, 10, 60);
   ctx.closePath();
 
-  if (step === geneCount) {
+  if (step === geneCount || hitTarget) {
     // calculate fitness and set it for all balls, sort balls by fitness in descending order
     calcFitness(balls);
 
@@ -190,12 +190,11 @@ function draw() {
       };
     }
 
-    // Tournament selection
     let alpha = Math.random(); // alpha is a random number between 0 and 1
 
-    for (let i = elitismCount; i < balls.length; i += 2) {
-      let parent1 = selectParent(balls, 3);
-      let parent2 = selectParent(balls, 3);
+    for (let i = 0; i < selectedBalls.length; i += 2) {
+      let parent1 = selectedBalls[i];
+      let parent2 = selectedBalls[i + 1];
       let { child1, child2 } = crossover(parent1, parent2, alpha);
 
       child1.genes = mutate(child1.genes);
